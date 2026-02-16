@@ -1,0 +1,7 @@
+(move eroe1 glimmering-glades fortezza-ferro)
+(lower-drawbridge eroe1 fortezza-ferro)
+(disarm-traps eroe1 fortezza-ferro sofia)
+(defeat-golem eroe1 fortezza-ferro)
+(rescue-princess eroe1 sofia fortezza-ferro)
+(return-princess eroe1 sofia fortezza-ferro glimmering-glades)
+; cost = 6 (unit cost)

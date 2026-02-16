@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %}Revisione Lore - QuestMaster AI{% endblock %}
+
+{% block content %}
+<div class="phase-container">
+    <div class="phase-title">
+        📖 Fase 2: Revisione della Lore
+    </div>
+    
+    <div class="phase-description">
+        La tua lore è stata creata! Esamina il mondo narrativo generato dall'AI. 
+        Se sei soddisfatto, procedi alla prossima fase per generare i file tecnici.
+    </div>
+    
+    {% if state.formatted_lore %}
+    <div class="lore-display">
+        <div class="lore-section">
+            <h3 class="lore-title">{{ state.formatted_lore.title }}</h3>
+        </div>
+        
+        <div class="lore-section">
+            <h4 class="lore-subtitle">📖 Storia Iniziale</h4>
+            <p class="lore-text">{{ state.formatted_lore.initial_state }}</p>
+        </div>
+        
+        <div class="lore-section">
+            <h4 class="lore-subtitle">🎯 Obiettivo</h4>
+            <p class="lore-text">{{ state.formatted_lore.goal }}</p>
+        </div>
+        
+        {% if state.formatted_lore.obstacles %}
+        <div class="lore-section">
+            <h4 class="lore-subtitle">⚠️ Ostacoli da Superare</h4>
+            <ul class="lore-list">
+                {% for obstacle in state.formatted_lore.obstacles %}
+                <li class="lore-list-item">{{ obstacle }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+        
+        <div class="lore-section">
+            <h4 class="lore-subtitle">🌍 Contesto del Mondo</h4>
+            <p class="lore-text">{{ state.formatted_lore.world_background }}</p>
+        </div>
+        
+        {% if state.formatted_lore.contextual_information %}
+        <div class="lore-section">
+            <h4 class="lore-subtitle">💡 Informazioni Aggiuntive</h4>
+            <p class="lore-text">{{ state.formatted_lore.contextual_information }}</p>
+        </div>
+        {% endif %}
+    </div>
+    {% else %}
+    <div class="lore-display">
+        <p>Lore non ancora generata. Torna alla fase di creazione.</p>
+    </div>
+    {% endif %}
+    
+    <div class="phase-actions">
+        <a href="{{ url_for('get_state_route', state='creation') }}" class="btn btn-secondary">
+            ← Modifica Descrizione
+        </a>
+        <button type="button" id="approve-lore-btn" class="btn btn-primary">
+            Approva e Continua →
+        </button>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block title %}Creazione Avventura - QuestMaster AI{% endblock %}
+
+{% block content %}
+<div class="phase-container">
+    <div class="phase-title">
+        ✨ Fase 1: Creazione dell'Avventura
+    </div>
+    
+    <div class="phase-description">
+        Descrivi il mondo, i personaggi e l'ambientazione della tua avventura interattiva. 
+        L'AI utilizzerà la tua descrizione per creare un universo narrativo completo.
+    </div>
+    
+    <!-- Pulsante per caricare storia esistente -->
+    {% if has_existing_story %}
+    <div class="existing-story-section">
+        <button id="load-existing-story-btn" class="btn btn-secondary">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+                <polyline points="10 9 9 9 8 9"></polyline>
+            </svg>
+            Carica Storia Esistente
+        </button>
+        <p class="text-muted" style="font-size: 12px; margin-top: 8px;">
+            È stata rilevata una storia già generata. Clicca per visualizzarla e continuare.
+        </p>
+    </div>
+    {% endif %}
+    
+    <div class="mb-3">
+        <h6 class="text-muted mb-2">� Suggerimenti per una buona descrizione:</h6>
+        <div class="text-muted" style="font-size: 13px;">
+            • <strong>Ambientazione:</strong> mondo fantasy, sci-fi, storico...<br>
+            • <strong>Protagonista:</strong> chi è il personaggio principale<br>
+            • <strong>Obiettivo:</strong> cosa deve raggiungere<br>
+            • <strong>Ostacoli:</strong> sfide da superare<br>
+            • <strong>Atmosfera:</strong> tono della storia
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block fixed_input %}
+<div class="fixed-input-container">
+    <div class="input-wrapper">
+        <div class="input-container">
+            <textarea 
+                id="message-input" 
+                class="message-input" 
+                placeholder="Descrivi la tua avventura... (es: Un giovane mago deve recuperare tre cristalli magici per salvare il regno...)"
+                rows="1"></textarea>
+            <button id="send-button" class="send-button" disabled>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M1.724 1.053a.5.5 0 0 1 .666-.23L14.896 8.05a.5.5 0 0 1 0 .9L2.39 16.177a.5.5 0 0 1-.666-.23L.055 8.5a.5.5 0 0 1 .157-.457L1.724 1.053z"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Popup per mostrare la storia esistente -->
+<div id="existing-story-modal" class="modal-overlay" style="display: none;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Storia Esistente</h3>
+            <button class="modal-close" id="close-modal-btn">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div id="story-preview-container">
+                <div class="loading-spinner"></div>
+                <p class="status-message status-loading">Caricamento storia...</p>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button id="continue-existing-story-btn" class="btn btn-primary">
+                Continua con questa storia
+            </button>
+            <button id="cancel-modal-btn" class="btn btn-secondary">
+                Crea nuova storia
+            </button>
+        </div>
+    </div>
+</div>
+{% endblock %}

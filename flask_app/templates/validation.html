@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Validazione PDDL - QuestMaster AI{% endblock %}
+
+{% block content %}
+<div class="phase-container">
+    <div class="phase-title">
+        ⚙️ Fase 3: Validazione PDDL
+    </div>
+    
+    <div class="phase-description">
+        I file PDDL verranno generati e validati. Il sistema verificherà che tutto sia corretto 
+        prima di procedere alla generazione del piano.
+    </div>
+    
+    <div class="phase-actions">
+        <button type="button" id="validate-pddl-btn" class="btn btn-primary">
+            ⚡ Avvia Validazione
+        </button>
+    </div>
+    
+    <div id="validation-results" class="validation-results" style="display: none;">
+        <!-- Risultati validazione verranno mostrati qui -->
+    </div>
+    
+    <div class="phase-actions" id="continue-actions" style="display: none;">
+        <a href="{{ url_for('get_state_route', state='lore_review') }}" class="btn btn-secondary">
+            ← Torna alla Lore
+        </a>
+        <button type="button" id="continue-validation-btn" class="btn btn-primary">
+            Continua al Piano →
+        </button>
+    </div>
+</div>
+{% endblock %}

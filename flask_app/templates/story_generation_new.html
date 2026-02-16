@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}Generazione Storia - QuestMaster AI{% endblock %}
+
+{% block content %}
+<div class="phase-container">
+    <div class="phase-title">
+        📖 Fase 5: Generazione Storia
+    </div>
+    
+    <div class="phase-description">
+        La storia interattiva verrà generata basandosi sulla lore approvata e sul piano ottimale.
+    </div>
+    
+    <div class="phase-actions">
+        <button type="button" id="generate-story-btn" class="btn btn-primary">
+            ✨ Genera Storia Interattiva
+        </button>
+    </div>
+    
+    <div id="generation-progress" class="progress-container" style="display: none;">
+        <div class="progress-text">Generazione in corso...</div>
+    </div>
+    
+    <div class="phase-actions" id="story-actions" style="display: none;">
+        <a href="{{ url_for('get_state_route', state='plan_review') }}" class="btn btn-secondary">
+            ← Torna al Piano
+        </a>
+        <button type="button" id="start-game-btn" class="btn btn-primary">
+            Inizia Avventura →
+        </button>
+    </div>
+</div>
+{% endblock %}

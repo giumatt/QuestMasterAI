@@ -1,0 +1,228 @@
+[
+    {
+      "node_id": "start",
+      "description": "Ti trovi nel cuore del pacifico regno di Glimmering Glades. La principessa Lyra è stata rapita da Grognak, l'orco motociclista. Devi partire verso la Fortezza di Ferro per salvarla.",
+      "choices": [
+        {
+          "text": "Parti per le Paludi Putride verso la Fortezza di Ferro",
+          "next_node": "move_to_fortezza",
+          "is_correct": true
+        },
+        {
+          "text": "Fermati a mangiare nella taverna",
+          "next_node": "fail_taverna",
+          "is_correct": false
+        },
+        {
+          "text": "Aspetta rinforzi dalla regina",
+          "next_node": "fail_attesa",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "node_id": "move_to_fortezza",
+      "description": "Attraversi le Paludi Putride schivando motociclisti mannari. Finalmente sei davanti alla Fortezza di Ferro.",
+      "choices": [
+        {
+          "text": "Abbassa il ponte levatoio arrugginito",
+          "next_node": "lower_drawbridge",
+          "is_correct": true
+        },
+        {
+          "text": "Prova ad arrampicarti sulle mura",
+          "next_node": "fail_arrampicata",
+          "is_correct": false
+        },
+        {
+          "text": "Aspetta che qualcuno apra il portone",
+          "next_node": "fail_attesa_ponte",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "node_id": "lower_drawbridge",
+      "description": "Con forza e astuzia, riesci ad abbassare il ponte levatoio. L'ingresso è libero ma potrebbe essere pericoloso.",
+      "choices": [
+        {
+          "text": "Entra e cerca le trappole",
+          "next_node": "disarm_traps",
+          "is_correct": true
+        },
+        {
+          "text": "Corri dentro a tutta velocità",
+          "next_node": "fail_corsa",
+          "is_correct": false
+        },
+        {
+          "text": "Tiri fuori la spada e urli contro Grognak",
+          "next_node": "fail_urlo",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "node_id": "disarm_traps",
+      "description": "Usando il medaglione incantato di Lyra, disinneschi le trappole nella fortezza.",
+      "choices": [
+        {
+          "text": "Avanza verso il cuore della fortezza",
+          "next_node": "defeat_golem",
+          "is_correct": true
+        },
+        {
+          "text": "Ignori le trappole rimanenti",
+          "next_node": "fail_trappole",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "node_id": "defeat_golem",
+      "description": "Un golem di ferraglia appare. Dopo una battaglia epica, riesci a sconfiggerlo.",
+      "choices": [
+        {
+          "text": "Raggiungi la cella dove è rinchiusa la principessa",
+          "next_node": "rescue_princess",
+          "is_correct": true
+        },
+        {
+          "text": "Prova a domare il golem",
+          "next_node": "fail_domare",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "node_id": "rescue_princess",
+      "description": "La principessa è incatenata ma viva. Con l'aiuto del medaglione riesci a liberarla.",
+      "choices": [
+        {
+          "text": "Scappa dalla fortezza con Lyra",
+          "next_node": "return_with_princess",
+          "is_correct": true
+        },
+        {
+          "text": "Chiedi alla principessa di affrontare Grognak con te",
+          "next_node": "fail_duo",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "node_id": "return_with_princess",
+      "description": "Riesci a tornare a Glimmering Glades con la principessa. La missione è compiuta!",
+      "choices": []
+    },
+    {
+      "node_id": "fail_taverna",
+      "description": "Mentre ti abbuffi alla taverna, Grognak rafforza le difese. Hai perso l'occasione.",
+      "choices": [
+        {
+          "text": "Riprova",
+          "next_node": "game_over",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "node_id": "fail_attesa",
+      "description": "I rinforzi non arrivano mai. Grognak scompare tra le paludi. Missione fallita.",
+      "choices": [
+        {
+          "text": "Riprova",
+          "next_node": "game_over",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "node_id": "fail_arrampicata",
+      "description": "Scivoli dalle mura e vieni catturato dai lupi mannari motociclisti.",
+      "choices": [
+        {
+          "text": "Riprova",
+          "next_node": "game_over",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "node_id": "fail_attesa_ponte",
+      "description": "Nessuno apre. Nel frattempo, vieni assalito dai pattugliatori.",
+      "choices": [
+        {
+          "text": "Riprova",
+          "next_node": "game_over",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "node_id": "fail_corsa",
+      "description": "Attivi una trappola esplosiva e vieni ferito gravemente.",
+      "choices": [
+        {
+          "text": "Riprova",
+          "next_node": "game_over",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "node_id": "fail_urlo",
+      "description": "Grognak ti sente e lancia contro di te il golem prima del previsto.",
+      "choices": [
+        {
+          "text": "Riprova",
+          "next_node": "game_over",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "node_id": "fail_trappole",
+      "description": "Una trappola si attiva e vieni colpito da una lama avvelenata.",
+      "choices": [
+        {
+          "text": "Riprova",
+          "next_node": "game_over",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "node_id": "fail_domare",
+      "description": "Il golem ti ignora e ti schiaccia come un insetto.",
+      "choices": [
+        {
+          "text": "Riprova",
+          "next_node": "game_over",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "node_id": "fail_duo",
+      "description": "Lyra non è addestrata alla battaglia. Grognak vi sopraffà entrambi.",
+      "choices": [
+        {
+          "text": "Riprova",
+          "next_node": "game_over",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "node_id": "game_over",
+      "description": "Hai fallito la missione. La Principessa Lyra resta prigioniera di Grognak. Vuoi riprovare?",
+      "choices": [
+        {
+          "text": "Ricomincia dall'inizio",
+          "next_node": "start",
+          "is_correct": true
+        }
+      ]
+    }
+  ]

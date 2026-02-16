@@ -1,0 +1,26 @@
+{
+    "lore_document": {
+      "quest_description": {
+        "title": "La Principessa e l'Orco Motociclista",
+        "initial_state": "Il regno di Glimmering Glades è in preda al panico. La Principessa Lyra è stata rapita da Grognak, un orco brutale che guida una motocicletta infernale alimentata a goblin. Grognak si è rifugiato nella Fortezza di Ferro, una roccaforte abbandonata nelle Paludi Putride.",
+        "goal": "Salvare la Principessa Lyra dalla Fortezza di Ferro e riportarla sana e salva a Glimmering Glades.",
+        "obstacles": [
+          "Grognak e la sua motocicletta infernale",
+          "Un branco di lupi mannari motociclisti che pattugliano le Paludi Putride",
+          "Un ponte levatoio arrugginito e malfunzionante che protegge l'ingresso della Fortezza di Ferro",
+          "Trappole esplosive disseminate da Grognak all'interno della fortezza",
+          "Un golem di ferraglia animato dalla magia oscura di Grognak"
+        ],
+        "world_background": "Glimmering Glades è un regno pacifico governato dalla saggia Regina Elara. La sua gente è nota per la sua abilità nell'arte e nella musica. Le Paludi Putride, una terra desolata e pericolosa, sono state a lungo evitate dagli abitanti del regno.",
+        "contextual_information": "La Principessa Lyra possiede un medaglione incantato che è l'unico oggetto in grado di disattivare le trappole di Grognak. Senza di esso, l'eroe dovrà affrontare pericoli mortali."
+      },
+      "branching_factor": {
+        "min_actions_per_state": 2,
+        "max_actions_per_state": 4
+      },
+      "depth_constraints": {
+        "min_steps_to_goal": 4,
+        "max_steps_to_goal": 8
+      }
+    }
+  }

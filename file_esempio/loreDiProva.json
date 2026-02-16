@@ -1,0 +1,28 @@
+{
+    "lore_document": {
+      "quest_description": {
+        "title": "La Chiave del Drago",
+        "initial_state": "Il regno di Eldoria è minacciato da un antico drago che si è risvegliato nella Caverna di Fumo Nero. La Principessa Aurelia è stata rapita e tenuta prigioniera nel cuore della montagna.",
+        "goal": "Salvare la Principessa Aurelia e recuperare la Chiave di Luce, unico artefatto in grado di sigillare nuovamente il drago.",
+        "obstacles": [
+          "Il drago di fumo nero e il suo alito infuocato",
+          "Un labirinto di cunicoli instabili nella montagna",
+          "Guardiani scheletri risvegliati da un incantesimo oscuro",
+          "Un ponte sospeso gravemente danneggiato su un abisso profondo"
+        ],
+        "world_background": "Eldoria è un antico regno di maghi e cavalieri. La sua popolazione vive tranquilla sotto la protezione del casato reale. Leggende narrano di un drago primordiale sigillato secoli fa a protezione del regno, ma la recente corruzione di un artefatto oscuro lo ha liberato.",
+        "contextual_information": "Il regno ha subito carestie e guerre civili in passato, e solo grazie all'eroismo di Casa Valerius il drago venne imprigionato. Ora si teme un ritorno al caos se l'eroe non interverrà."
+      },
+      "branching_factor": {
+        "min_actions_per_state": 2,
+        "max_actions_per_state": 4
+      },
+      "depth_constraints": {
+        "min_steps_to_goal": 3,
+        "max_steps_to_goal": 7
+      }
+    }
+  }
+
+
+  

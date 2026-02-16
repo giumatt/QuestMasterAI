@@ -1,0 +1,184 @@
+{% extends "base.html" %}
+
+{% block title %}Gameplay - QuestMaster AI{% endblock %}
+
+{% block content %}
+<div class="phase-container">
+    <div class="phase-title">
+        🎮 La Tua Avventura
+    </div>
+    
+    <div id="story-container" class="story-display">
+        <div class="loading-text">Caricamento avventura...</div>
+    </div>
+    
+    <div class="phase-actions" id="game-controls">
+        <button type="button" id="undo-btn" class="btn btn-secondary">
+            ↶ Torna al passo precedente
+        </button>
+        <button type="button" id="reset-game-btn" class="btn btn-secondary">
+            🔄 Ricomincia dall'inizio
+        </button>
+    </div>
+</div>
+
+<script>
+let storyData = null;
+let choiceOrderSeed = null;
+
+async function loadGame() {
+    try {
+        const response = await fetch('/api/game/load');
+        const data = await response.json();
+        console.log('loadGame ->', data);
+        if (data.success) {
+            storyData = data.story;  // Ora è un dizionario
+            choiceOrderSeed = data.choice_order_seed || null;
+            renderNode(data.current_node, data.node_data);
+        } else {
+            document.getElementById('story-container').innerHTML = `<p>Errore: ${data.error}</p>`;
+        }
+    } catch (error) {
+        document.getElementById('story-container').innerHTML = `<p>Errore nel caricamento: ${error.message}</p>`;
+    }
+}
+
+function renderNode(nodeId, nodeData) {
+    const data = nodeData || (storyData && storyData[nodeId]);
+    if (!data) {
+        // Se non troviamo i dati, richiediamo il caricamento completo e riproviamo
+        loadGame();
+        return;
+    }
+
+    const nodeIdValue = data.node_id || nodeId;
+    let html = `<div class="story-text"><p>${data.description || 'Nessuna descrizione.'}</p></div>`;
+
+    if (data.choices && data.choices.length > 0) {
+        // Shuffle deterministico basato sul seed di sessione (se presente)
+        function mulberry32(a) {
+            return function() {
+                a |= 0; a = a + 0x6D2B79F5 | 0;
+                var t = Math.imul(a ^ a >>> 15, 1 | a);
+                t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+                return ((t ^ t >>> 14) >>> 0) / 4294967296;
+            }
+        }
+
+        function seededShuffle(arr, seed) {
+            const a = [...arr];
+            const rng = mulberry32(seed >>> 0);
+            for (let i = a.length - 1; i > 0; i--) {
+                const j = Math.floor(rng() * (i + 1));
+                [a[i], a[j]] = [a[j], a[i]];
+            }
+            return a;
+        }
+
+        // Combine seed with nodeId to vary order per node
+        let choicesToRender = [...data.choices];
+        if (choiceOrderSeed !== null && nodeIdValue) {
+            // simple hash of nodeId
+            let h = 0; for (let i = 0; i < nodeIdValue.length; i++) { h = ((h * 31) + nodeIdValue.charCodeAt(i)) >>> 0; }
+            const nodeSeed = (choiceOrderSeed ^ h) >>> 0;
+            choicesToRender = seededShuffle(choicesToRender, nodeSeed);
+        }
+
+        html += '<div class="choices-container">';
+        const defaultIcons = ['⚔️','🛡️','🤝','📜','🧭','🏹'];
+        choicesToRender.forEach((choice, index) => {
+            const safeText = (choice.text || '').replace(/'/g, "\\'");
+            const icon = choice.icon || defaultIcons[index] || '•';
+            html += `
+                <button class="choice-button" onclick="makeChoice('${choice.next_node}', '${safeText}')">
+                    <span style="display:inline-block;margin-right:10px;font-size:18px;vertical-align:middle;">${icon}</span>
+                    <span style="vertical-align:middle;">${choice.text}</span>
+                </button>`;
+        });
+        html += '</div>';
+    } else {
+        html += '<p>Hai completato l\'avventura!</p>';
+    }
+
+    document.getElementById('story-container').innerHTML = html;
+}
+
+async function makeChoice(nextNode, choiceText) {
+    try {
+        const response = await fetch('/api/game/make_choice', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ next_node: nextNode, choice_text: choiceText })
+        });
+        const data = await response.json();
+        console.log('makeChoice ->', data);
+        if (data.success) {
+            // Se il backend fornisce i dati del nodo, rendi direttamente; altrimenti ricarica
+            if (data.node_data) {
+                choiceOrderSeed = data.choice_order_seed || choiceOrderSeed;
+                // mantieni la cache client aggiornata
+                if (!storyData) storyData = {};
+                storyData[data.current_node] = data.node_data;
+                renderNode(data.current_node, data.node_data);
+            } else {
+                await loadGame();
+            }
+        } else {
+            alert(`Errore: ${data.error}`);
+        }
+    } catch (error) {
+        alert(`Errore nella scelta: ${error.message}`);
+    }
+}
+
+async function undoChoice() {
+    try {
+        const response = await fetch('/api/game/undo', { method: 'POST' });
+        const data = await response.json();
+        console.log('undoChoice ->', data);
+        if (data.success) {
+            choiceOrderSeed = data.choice_order_seed || choiceOrderSeed;
+            if (data.node_data) {
+                if (!storyData) storyData = {};
+                storyData[data.current_node] = data.node_data;
+                renderNode(data.current_node, data.node_data);
+            } else {
+                // fallback: ricarica lo story dal server
+                await loadGame();
+            }
+        } else {
+            alert(data.error);
+        }
+    } catch (error) {
+        alert(`Errore nell'undo: ${error.message}`);
+    }
+}
+
+async function resetGame() {
+    try {
+        const response = await fetch('/api/game/reset', { method: 'POST' });
+        const data = await response.json();
+        console.log('resetGame ->', data);
+        if (data.success) {
+            choiceOrderSeed = data.choice_order_seed || choiceOrderSeed;
+            if (data.node_data) {
+                storyData = storyData || {};
+                storyData[data.current_node] = data.node_data;
+                renderNode(data.current_node, data.node_data);
+            } else {
+                await loadGame();
+            }
+        } else {
+            alert(`Errore: ${data.error}`);
+        }
+    } catch (error) {
+        alert(`Errore nel reset: ${error.message}`);
+    }
+}
+
+document.getElementById('undo-btn').addEventListener('click', undoChoice);
+document.getElementById('reset-game-btn').addEventListener('click', resetGame);
+
+document.addEventListener('DOMContentLoaded', loadGame);
+</script>
+{% endblock %}

@@ -1,0 +1,10 @@
+langchain
+langchain-community
+streamlit
+python-dotenv
+gtts
+langchain-google-genai
+nest-asyncio
+pypdf
+faiss-cpu
+flask

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Revisione Piano - QuestMaster AI{% endblock %}
+
+{% block content %}
+<div class="phase-container">
+    <div class="phase-title">
+        🎯 Fase 4: Revisione del Piano
+    </div>
+    
+    <div class="phase-description">
+        Il piano ottimale è stato generato. Verifica la sequenza di azioni prima di 
+        procedere alla generazione della storia interattiva.
+    </div>
+    
+    {% if state.generated_plan %}
+    <div class="plan-display">
+        <h4>Piano Generato:</h4>
+        <pre>{{ state.generated_plan }}</pre>
+    </div>
+    {% endif %}
+    
+    <div class="phase-actions">
+        <a href="{{ url_for('get_state_route', state='validation') }}" class="btn btn-secondary">
+            ← Torna alla Validazione
+        </a>
+        <button type="button" id="approve-plan-btn" class="btn btn-primary">
+            Approva Piano →
+        </button>
+    </div>
+</div>
+{% endblock %}
