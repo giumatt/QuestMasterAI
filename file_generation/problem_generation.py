@@ -14,7 +14,7 @@ def create_problem_pddl(llm):
     Il tuo compito è creare un file problem.pddl che sia compatibile col domain.pddl generato e che rappresenti lo scenario specifico della lore.
 
     REQUISITI PER IL PROBLEM.PDDL:
-    - Deve essere pieno PDDL‑STRIPS, compatibile con Fast Downward (solo costrutti booleani, no numerici, no durative)
+    - Deve essere pieno PDDL-STRIPS, compatibile con Fast Downward (solo costrutti booleani, no numerici, no durative)
     - Deve essere compatibile con Fast Downward
     - Deve usare gli stessi predicati e oggetti definiti nel domain
     - Definisci gli objects specifici per questa istanza del problema
